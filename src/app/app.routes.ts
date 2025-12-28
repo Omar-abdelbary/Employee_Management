@@ -16,11 +16,5 @@ export const routes: Routes = [
 
 
 
-  // employee layouts
-  {path:"" , component: EmployeeComponent , children :[
-    {path:"" , },
-    {path:"" , },
-    {path:"" , },
-    {path:"" , }
-  ]}
+
 ];

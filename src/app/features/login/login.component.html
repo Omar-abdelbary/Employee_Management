@@ -1,1 +1,66 @@
-<p>login works!</p>
+<section class="login-section">
+    <div class="login-container">
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()" class="login-form">
+
+            <!-- Ninja Tracker -->
+            <div class="ninja-tracker">
+                <div class="track-line">
+                    <div class="track-fill" [style.width]="progressWidth"></div>
+                </div>
+
+                <div class="steps-container">
+                    <!-- Step 1 -->
+                    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+                        <span *ngIf="currentStep <= 1">1</span>
+                        <i *ngIf="currentStep > 1" class="fas fa-check"></i>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+                        <span *ngIf="currentStep <= 2">2</span>
+                        <i *ngIf="currentStep > 2" class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <!-- The Ninja Character -->
+                <div class="ninja-wrapper" [ngClass]="'pos-' + currentStep">
+                    <div class="ninja-character">
+                        <img src="./assets/imgs/ninja.png" alt="Ninja">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Container for Inputs - Clean list for Login -->
+            <div class="form-grid">
+                <!-- Input Group 1: Email -->
+                <div class="input-group">
+                    <input type="email" id="email" formControlName="email" placeholder=" " autocomplete="off"
+                        (focus)="setStep(1)">
+                    <label for="email">Email</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+
+                <!-- Input Group 2: Password -->
+                <div class="input-group">
+                    <!-- Password Field -->
+                    <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" formControlName="password"
+                        placeholder=" " autocomplete="off" (focus)="setStep(2)">
+                    <label for="password">Password</label>
+                    <i class="fas fa-lock input-icon"></i>
+
+                    <!-- Toggle Visibility Icon -->
+                    <i [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'" class="fas password-toggle-icon"
+                        (click)="togglePasswordVisibility()">
+                    </i>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">
+                Login
+            </button>
+
+        </form>
+    </div>
+</section>
