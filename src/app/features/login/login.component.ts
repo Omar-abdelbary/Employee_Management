@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +25,8 @@ export class LoginComponent {
   private readonly _Router = inject(Router);
   private readonly _AuthService = inject(AuthService);
   private readonly _ToastrService = inject(ToastrService) ;
+  private readonly _PLATFORM_ID = inject(PLATFORM_ID) ;
+  private jumpSound!: HTMLAudioElement;
 
   // Login form
   loginForm: FormGroup = this._FormBuilder.group({
@@ -36,8 +38,16 @@ export class LoginComponent {
   currentStep: number = 1;
   // Use a simple boolean to track password visibility
   isPasswordVisible: boolean = false;
+
+  //  if (isPlatformBrowser(this._PLATFORM_ID)) {
+  //   private jumpSound = new Audio('assets/sounds/notification-jump.wav');
+  // }
   // Simple audio object
-  private jumpSound = new Audio('assets/sounds/notification-jump.wav');
+ngAfterViewInit() {
+  if (typeof window !== 'undefined') {
+      this.jumpSound = new Audio('assets/sounds/notification-jump.wav');
+  }
+}
 
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
